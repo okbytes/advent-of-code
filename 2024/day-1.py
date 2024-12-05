@@ -17,7 +17,8 @@ diff = 0
 for i in range(len(lhs2)):
     diff += abs(int(lhs2[i]) - int(rhs2[i]))
 
-print("part 1:", diff)
+# ex 11
+print("part 1:", diff)  # 2086478
 
 # part 2
 total_sim = 0
@@ -31,4 +32,5 @@ for numL in lhs:
 
     total_sim += sim
 
-print("part 2:", total_sim)
+# ex 31
+print("part 2:", total_sim)  # 24941624
