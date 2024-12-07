@@ -91,4 +91,4 @@ def part2(reports):
 
 
 print("part 2 ex:", part2(ex_reports))  # output: 4
-print("part 2:", part2(reports))
+print("part 2:", part2(reports))  # output: 373
