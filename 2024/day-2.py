@@ -22,7 +22,7 @@ def base_case(a, b, dir):
     return int(is_inc(a, b, dir) or is_dec(a, b, dir))
 
 
-def fn1(levels, dir):
+def checkr(levels, dir):
     a = int(levels[0])
     b = int(levels[1])
     # print(dir, levels, "diff:", abs(a - b))
@@ -32,10 +32,10 @@ def fn1(levels, dir):
             return base_case(a, b, dir)
 
         if is_inc(a, b, dir):
-            return fn1(levels[1:], "inc")
+            return checkr(levels[1:], "inc")
 
         if is_dec(a, b, dir):
-            return fn1(levels[1:], "dec")
+            return checkr(levels[1:], "dec")
 
     return 0
 
@@ -44,7 +44,7 @@ def part1(reports):
     total_safe = 0
 
     for report in reports:
-        ans = fn1(report.split(), None)
+        ans = checkr(report.split(), None)
         # print("safe:", ans, "\n")
 
         total_safe += ans
@@ -60,35 +60,35 @@ def part1(reports):
 #
 
 
-def fn2(levels, dir, damp):
-    a = int(levels[0])
-    b = int(levels[1])
-    # print(dir, levels, "diff:", abs(a - b))
+def rmidx(arr, index):
+    """Creates a new array with the specified index removed."""
+    return arr[:index] + arr[index + 1 :]
 
-    if is_safe_diff(a, b):
-        if len(levels) == 2:
-            return base_case(a, b, dir)
 
-        if is_inc(a, b, dir):
-            return fn2(levels[1:], "inc", damp)
+def dampenr(report):
+    safe = 0
+    levels = report.split()
 
-        if is_dec(a, b, dir):
-            return fn2(levels[1:], "dec", damp)
+    if checkr(levels, None):
+        return 1
 
-    return 0
+    # loop through all permutations of list to see if any succeed with one removed
+    for i in range(len(levels)):
+        ans = checkr(rmidx(levels, i), None)
+        if ans == 1:
+            return ans
+
+    return safe
 
 
 def part2(reports):
     total_safe = 0
 
     for report in reports:
-        ans = fn2(report.split(), None, False)
-        # print("safe:", ans, "\n")
-
-        total_safe += ans
+        total_safe += dampenr(report)
 
     return total_safe
 
 
 print("part 2 ex:", part2(ex_reports))  # output: 4
-# print("part 2:", part2(reports))
+print("part 2:", part2(reports))
